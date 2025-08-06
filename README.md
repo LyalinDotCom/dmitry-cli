@@ -32,7 +32,7 @@ A demonstration project showing how to integrate Google's Genkit framework with 
    
    # Pull some models
    ollama pull llama3.2
-   ollama pull gemma2
+   ollama pull gemma3
    ```
 
 ## Installation

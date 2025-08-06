@@ -2,6 +2,17 @@
 
 A demonstration project showing how to integrate Google's Genkit framework with Ollama for building applications that work with local language models. This sample CLI showcases the integration approach and is inspired by the architecture patterns found in Gemini CLI, though no direct code was used.
 
+## Screenshots
+
+### Starting the CLI
+![Starting the CLI](docs/screenshots/screenshot_001_startcli.png)
+
+### Model Selection Interface
+![CLI Started - Model Selection](docs/screenshots/screenshot_002_clistarted.png)
+
+### Chatting with the Model
+![Talking to Model](docs/screenshots/screenshot_003_talkingtomodel.png)
+
 ## What This Demonstrates
 
 - Integration of Genkit framework with Ollama for local model access

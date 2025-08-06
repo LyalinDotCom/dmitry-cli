@@ -111,7 +111,3 @@ dmitry-cli/
 ## Credits
 
 This demo is inspired by the architectural patterns in [Gemini CLI](https://github.com/google-gemini/gemini-cli), particularly the use of Ink for terminal UI and the separation of CLI and core logic. No direct code was used from Gemini CLI.
-
-## License
-
-MIT

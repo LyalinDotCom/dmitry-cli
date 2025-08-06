@@ -1,0 +1,18 @@
+{
+  "name": "dmitry-cli",
+  "version": "1.0.0",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -ws",
+    "dev": "npm run dev -w @dmitry-cli/cli",
+    "start": "npm run start -w @dmitry-cli/cli",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Dmitry's CLI - A modern terminal interface"
+}

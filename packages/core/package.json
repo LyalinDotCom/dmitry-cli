@@ -1,0 +1,11 @@
+{
+  "name": "@dmitry-cli/core",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./src/index.js",
+  "scripts": {
+    "build": "echo 'No build needed for now'",
+    "dev": "echo 'Core package ready'"
+  },
+  "dependencies": {}
+}

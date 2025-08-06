@@ -1,0 +1,17 @@
+{
+  "name": "@dmitry-cli/cli",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "dmitry": "./src/index.js"
+  },
+  "scripts": {
+    "start": "node ./src/index.js",
+    "dev": "node ./src/index.js"
+  },
+  "dependencies": {
+    "@dmitry-cli/core": "file:../core",
+    "ink": "^5.0.1",
+    "react": "^18.3.1"
+  }
+}

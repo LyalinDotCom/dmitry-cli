@@ -55,13 +55,11 @@ export function useModelStream(initialModel = null) {
     setError(null);
 
     try {
-      // For now, use non-streaming generate since Genkit doesn't support streaming out of the box
-      const response = await providerRef.current.generate(input);
+      // Use real streaming from Genkit
+      const stream = providerRef.current.streamResponse(input);
       
-      // Simulate streaming for better UX
-      for (let i = 0; i < response.length; i++) {
-        await new Promise(resolve => setTimeout(resolve, 10));
-        setStreamContent(prev => prev + response[i]);
+      for await (const chunk of stream) {
+        setStreamContent(prev => prev + chunk);
       }
     } catch (err) {
       setError(err.message);

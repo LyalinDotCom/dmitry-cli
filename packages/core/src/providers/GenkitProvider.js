@@ -51,8 +51,8 @@ export class GenkitProvider {
    */
   async *streamResponse(prompt, options = {}) {
     try {
-      // Use the full model name with tag for Ollama
-      const response = await this.ai.generate({
+      // Use generateStream for real streaming
+      const { stream, response } = await this.ai.generateStream({
         model: `ollama/${this.currentModel}`,
         prompt,
         config: {
@@ -61,9 +61,15 @@ export class GenkitProvider {
         },
       });
 
-      // Genkit doesn't support streaming by default, so we'll yield the full response
-      // In a real implementation, we'd use streamGenerate if available
-      yield response.text;
+      // Stream chunks as they arrive
+      for await (const chunk of stream) {
+        if (chunk.text) {
+          yield chunk.text;
+        }
+      }
+      
+      // Ensure we have the complete response
+      await response;
     } catch (error) {
       if (error.message?.includes('ECONNREFUSED')) {
         throw new Error('Cannot connect to Ollama. Make sure Ollama is running on http://127.0.0.1:11434');

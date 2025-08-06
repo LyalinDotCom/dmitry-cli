@@ -67,7 +67,7 @@ Simply type your message and press Enter to chat with the model.
 - **packages/cli**: Terminal UI built with Ink (React for terminals)
 - **packages/core**: Genkit integration and Ollama service wrapper
 
-The integration uses Genkit's `generate()` method for model interactions. While Genkit supports streaming with `streamGenerate()`, this demo uses the simpler non-streaming approach for clarity.
+The integration uses Genkit's `generateStream()` method for real-time streaming responses from the models.
 
 ## Key Integration Points
 

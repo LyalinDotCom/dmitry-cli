@@ -4,7 +4,7 @@ import { GenkitProvider } from '@dmitry-cli/core';
 export function useModelStream(initialModel = null) {
   const [isStreaming, setIsStreaming] = useState(false);
   const [streamContent, setStreamContent] = useState('');
-  const [currentModel, setCurrentModel] = useState(initialModel || 'llama3.2');
+  const [currentModel, setCurrentModel] = useState(initialModel);
   const [error, setError] = useState(null);
   const providerRef = useRef(null);
 
@@ -12,9 +12,7 @@ export function useModelStream(initialModel = null) {
   const initializeProvider = useCallback((modelName) => {
     providerRef.current = new GenkitProvider({
       defaultModel: modelName,
-      models: [
-        { name: modelName, type: 'generate' }
-      ]
+      models: [] // Models are discovered dynamically from Ollama
     });
   }, []);
 

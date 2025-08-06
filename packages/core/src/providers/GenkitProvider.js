@@ -9,16 +9,13 @@ export class GenkitProvider {
     this.ai = genkit({
       plugins: [
         ollama({
-          models: config.models || [
-            { name: 'llama3.2', type: 'generate' },
-            { name: 'gemma2', type: 'generate' }
-          ],
+          models: config.models || [],
           serverAddress: config.serverAddress || 'http://127.0.0.1:11434',
         }),
       ],
     });
     
-    this.currentModel = config.defaultModel || 'llama3.2';
+    this.currentModel = config.defaultModel || null;
     this.config = config;
   }
 

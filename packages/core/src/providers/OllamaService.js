@@ -24,10 +24,8 @@ export class OllamaService {
           const parts = line.split(/\s+/);
           if (parts.length >= 1) {
             const modelName = parts[0];
-            // Remove the tag if present (e.g., llama3.2:latest -> llama3.2)
-            const cleanName = modelName.split(':')[0];
             models.push({
-              name: cleanName,
+              name: modelName,
               fullName: modelName,
               size: parts[2] || 'unknown',
               modified: parts.slice(3).join(' ') || 'unknown'

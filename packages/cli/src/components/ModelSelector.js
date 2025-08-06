@@ -48,7 +48,7 @@ export function ModelSelector({ onModelSelected }) {
     } else if (key.downArrow) {
       setSelectedIndex(Math.min(models.length - 1, selectedIndex + 1));
     } else if (key.return && models.length > 0) {
-      onModelSelected(models[selectedIndex].name);
+      onModelSelected(models[selectedIndex].fullName);
     }
   });
   
@@ -93,11 +93,11 @@ export function ModelSelector({ onModelSelected }) {
     ...models.map((model, index) => 
       React.createElement(
         Box,
-        { key: model.name },
+        { key: `${model.fullName}-${index}` },
         React.createElement(
           Text,
           { color: index === selectedIndex ? 'green' : 'white' },
-          `${index === selectedIndex ? '▶ ' : '  '}${model.name} (${model.size})`
+          `${index === selectedIndex ? '▶ ' : '  '}${model.fullName} (${model.size})`
         )
       )
     ),

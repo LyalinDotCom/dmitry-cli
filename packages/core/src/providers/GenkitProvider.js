@@ -51,6 +51,7 @@ export class GenkitProvider {
    */
   async *streamResponse(prompt, options = {}) {
     try {
+      // Use the full model name with tag for Ollama
       const response = await this.ai.generate({
         model: `ollama/${this.currentModel}`,
         prompt,
@@ -67,6 +68,9 @@ export class GenkitProvider {
       if (error.message?.includes('ECONNREFUSED')) {
         throw new Error('Cannot connect to Ollama. Make sure Ollama is running on http://127.0.0.1:11434');
       }
+      if (error.message?.includes('not found')) {
+        throw new Error(`Model '${this.currentModel}' not found. Try running: ollama pull ${this.currentModel.split(':')[0]}`);
+      }
       throw error;
     }
   }
@@ -76,6 +80,7 @@ export class GenkitProvider {
    */
   async generate(prompt, options = {}) {
     try {
+      // Use the full model name with tag for Ollama
       const response = await this.ai.generate({
         model: `ollama/${this.currentModel}`,
         prompt,
@@ -89,6 +94,9 @@ export class GenkitProvider {
     } catch (error) {
       if (error.message?.includes('ECONNREFUSED')) {
         throw new Error('Cannot connect to Ollama. Make sure Ollama is running on http://127.0.0.1:11434');
+      }
+      if (error.message?.includes('not found')) {
+        throw new Error(`Model '${this.currentModel}' not found. Try running: ollama pull ${this.currentModel.split(':')[0]}`);
       }
       throw error;
     }

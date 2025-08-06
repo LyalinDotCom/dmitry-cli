@@ -39,7 +39,7 @@ export function App() {
               const models = await getAvailableModels();
               const infoMessage = {
                 type: 'info',
-                content: `Current model: ${currentModel}\nAvailable models: ${models.join(', ')}`,
+                content: `Current model: ${currentModel}\nAvailable models: ${models.map(m => m.split(':')[0]).join(', ')}`,
                 timestamp: new Date().toLocaleTimeString()
               };
               session.addMessage(infoMessage);
@@ -189,7 +189,7 @@ export function App() {
       React.createElement(
         Text,
         { bold: true, color: 'cyan' },
-        `🚀 Dmitry CLI - Model: ${currentModel} ${isStreaming ? '(thinking...)' : ''}`
+        `🚀 Dmitry CLI - Model: ${currentModel.split(':')[0]} ${isStreaming ? '(thinking...)' : ''}`
       )
     ),
     
@@ -206,7 +206,7 @@ export function App() {
           React.createElement(
             Text,
             { color: message.type === 'user' ? 'green' : message.type === 'assistant' ? 'yellow' : message.type === 'error' ? 'red' : 'cyan' },
-            `[${message.timestamp}] ${message.type === 'user' ? 'You' : message.type === 'assistant' ? currentModel : message.type}:`
+            `[${message.timestamp}] ${message.type === 'user' ? 'You' : message.type === 'assistant' ? currentModel.split(':')[0] : message.type}:`
           ),
           React.createElement(Text, null, ` ${message.content}`)
         )
@@ -218,7 +218,7 @@ export function App() {
         React.createElement(
           Text,
           { color: 'yellow' },
-          `[${new Date().toLocaleTimeString()}] ${currentModel}:`
+          `[${new Date().toLocaleTimeString()}] ${currentModel.split(':')[0]}:`
         ),
         React.createElement(Text, null, ` ${streamContent}█`)
       )

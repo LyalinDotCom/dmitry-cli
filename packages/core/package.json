@@ -7,5 +7,9 @@
     "build": "echo 'No build needed for now'",
     "dev": "echo 'Core package ready'"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@genkit-ai/googleai": "^1.15.5",
+    "genkit": "^1.15.5",
+    "genkitx-ollama": "^1.15.5"
+  }
 }

@@ -21,3 +21,7 @@ export class Session {
     this.messages = [];
   }
 }
+
+// Export providers
+export { GenkitProvider } from './providers/GenkitProvider.js';
+export { OllamaService } from './providers/OllamaService.js';

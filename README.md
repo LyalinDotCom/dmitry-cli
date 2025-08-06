@@ -1,14 +1,14 @@
-# Dmitry CLI
+# Dmitry CLI - Genkit + Ollama Demo
 
-A Node.js terminal interface with local model support via Genkit framework and Ollama.
+A demonstration project showing how to integrate Google's Genkit framework with Ollama for building applications that work with local language models. This sample CLI showcases the integration approach and is inspired by the architecture patterns found in Gemini CLI, though no direct code was used.
 
-## Features
+## What This Demonstrates
 
-- 🚀 React-based terminal UI using Ink framework
-- 💬 Chat with local models through Ollama
-- 🔄 Easy model switching with slash commands
-- ⚡ Streaming responses (simulated)
-- 🎨 Colorful and interactive interface
+- Integration of Genkit framework with Ollama for local model access
+- Dynamic model discovery from Ollama at runtime
+- React-based terminal UI using Ink framework
+- Clean separation of concerns with monorepo structure
+- Model switching and interactive chat capabilities
 
 ## Prerequisites
 
@@ -55,102 +55,51 @@ Simply type your message and press Enter to chat with the model.
 - `Left/Right Arrow` - Move cursor
 - `Ctrl+C` - Exit the application
 
+## How It Works
+
+1. **Model Discovery**: On startup, the CLI queries `ollama list` to find installed models
+2. **Model Selection**: Interactive UI allows selecting from available models
+3. **Genkit Integration**: Selected model is accessed through Genkit's Ollama plugin
+4. **Chat Interface**: Messages are sent to the model and responses are displayed
+
 ## Architecture
 
-The project is structured as a monorepo with two main packages:
+- **packages/cli**: Terminal UI built with Ink (React for terminals)
+- **packages/core**: Genkit integration and Ollama service wrapper
 
-### `packages/cli`
-- Terminal UI using Ink (React for terminals)
-- Input handling and display
-- Slash command processing
+The integration uses Genkit's `generate()` method for model interactions. While Genkit supports streaming with `streamGenerate()`, this demo uses the simpler non-streaming approach for clarity.
 
-### `packages/core`
-- Genkit integration for model communication
-- Session management
-- Provider abstraction for Ollama
+## Key Integration Points
 
-## Configuration
-
-The Genkit provider is configured in `packages/core/src/providers/GenkitProvider.js`:
-
+### Genkit Provider (`packages/core/src/providers/GenkitProvider.js`)
 ```javascript
-{
-  models: [
-    { name: 'llama3.2', type: 'generate' },
-    { name: 'gemma2', type: 'generate' },
-    { name: 'mistral', type: 'generate' },
-    { name: 'llama3.1', type: 'generate' }
+const ai = genkit({
+  plugins: [
+    ollama({
+      models: [{ name: modelName, type: 'generate' }],
+      serverAddress: 'http://127.0.0.1:11434',
+    }),
   ],
-  serverAddress: 'http://127.0.0.1:11434' // Ollama default
-}
+});
 ```
 
-## Troubleshooting
+### Model Discovery (`packages/core/src/providers/OllamaService.js`)
+- Executes `ollama list` to get available models
+- Parses output to present model selection
 
-### "Cannot connect to Ollama"
-Make sure Ollama is running:
-```bash
-ollama serve
-```
-
-### Model not available
-Pull the model first:
-```bash
-ollama pull <model-name>
-```
-
-### Build errors
-Make sure you're using Node.js v20+:
-```bash
-node --version
-```
-
-## Development
-
-### Project Structure
+## Project Structure
 ```
 dmitry-cli/
 ├── packages/
-│   ├── cli/           # Terminal UI
-│   │   ├── src/
-│   │   │   ├── App.js
-│   │   │   ├── index.js
-│   │   │   └── hooks/
-│   │   │       └── useModelStream.js
-│   │   └── package.json
-│   └── core/          # Core logic
-│       ├── src/
-│       │   ├── index.js
-│       │   └── providers/
-│       │       └── GenkitProvider.js
-│       └── package.json
-├── package.json       # Root package.json
+│   ├── cli/           # Terminal UI (Ink/React)
+│   └── core/          # Genkit + Ollama integration
+├── test-ollama.js     # Test script for Ollama connection
 └── README.md
 ```
 
-### Adding New Models
+## Credits
 
-1. Ensure the model is available in Ollama:
-   ```bash
-   ollama pull <new-model>
-   ```
-
-2. Update the model list in `useModelStream.js`:
-   ```javascript
-   models: [
-     // ... existing models
-     { name: 'new-model', type: 'generate' }
-   ]
-   ```
-
-## Future Enhancements
-
-- [ ] Real streaming support (when Genkit adds it)
-- [ ] Model-specific parameters (temperature, max tokens)
-- [ ] Conversation history persistence
-- [ ] Export conversations
-- [ ] Multi-turn context management
-- [ ] Tool/function calling support
+This demo is inspired by the architectural patterns in [Gemini CLI](https://github.com/google-gemini/gemini-cli), particularly the use of Ink for terminal UI and the separation of CLI and core logic. No direct code was used from Gemini CLI.
 
 ## License
 
